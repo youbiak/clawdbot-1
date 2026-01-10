@@ -1150,7 +1150,7 @@ ${theme.muted("Docs:")} ${formatDocsLink(
 
   program
     .command("status")
-    .description("Show web session health and recent session recipients")
+    .description("Show provider health and recent session recipients")
     .option("--json", "Output JSON instead of text", false)
     .option("--usage", "Show provider usage/quota snapshots", false)
     .option(
