@@ -759,10 +759,7 @@ export async function applyAuthChoice(params: {
         message: "Enter Gemini API key",
         validate: validateApiKeyInput,
       });
-      await setGeminiApiKey(
-        normalizeApiKeyInput(String(key)),
-        params.agentDir,
-      );
+      await setGeminiApiKey(normalizeApiKeyInput(String(key)), params.agentDir);
     }
     nextConfig = applyAuthProfileConfig(nextConfig, {
       profileId: "google:default",
