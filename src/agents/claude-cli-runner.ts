@@ -19,6 +19,7 @@ import {
 } from "./pi-embedded-helpers.js";
 import type { EmbeddedPiRunResult } from "./pi-embedded-runner.js";
 import { buildAgentSystemPrompt } from "./system-prompt.js";
+import { buildToolSummaryMap } from "./tool-summaries.js";
 import {
   filterBootstrapFilesForSession,
   loadWorkspaceBootstrapFiles,
@@ -161,6 +162,7 @@ function buildSystemPrompt(params: {
       model: params.modelDisplay,
     },
     toolNames: params.tools.map((tool) => tool.name),
+    toolSummaries: buildToolSummaryMap(params.tools),
     modelAliasLines: buildModelAliasLines(params.config),
     userTimezone,
     userTime,
