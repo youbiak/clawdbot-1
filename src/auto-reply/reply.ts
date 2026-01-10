@@ -784,8 +784,13 @@ export async function getReplyFromConfig(
       : undefined;
 
   const isEmptyConfig = Object.keys(cfg).length === 0;
+  const skipWhenConfigEmpty = command.providerId
+    ? Boolean(
+        getProviderPlugin(command.providerId)?.commands?.skipWhenConfigEmpty,
+      )
+    : false;
   if (
-    command.isWhatsAppProvider &&
+    skipWhenConfigEmpty &&
     isEmptyConfig &&
     command.from &&
     command.to &&
