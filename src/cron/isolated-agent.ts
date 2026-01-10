@@ -40,6 +40,7 @@ import {
   type SessionEntry,
   saveSessionStore,
 } from "../config/sessions.js";
+import { INTERNAL_MESSAGE_PROVIDER } from "../utils/message-provider.js";
 import { registerAgentRunContext } from "../infra/agent-events.js";
 import { deliverOutboundPayloads } from "../infra/outbound/deliver.js";
 import { resolveMessageProviderSelection } from "../infra/outbound/provider-selection.js";
@@ -135,7 +136,7 @@ async function resolveDeliveryTarget(
   const store = loadSessionStore(storePath);
   const main = store[mainSessionKey];
   const lastProvider =
-    main?.lastProvider && main.lastProvider !== "webchat"
+    main?.lastProvider && main.lastProvider !== INTERNAL_MESSAGE_PROVIDER
       ? (normalizeProviderId(main.lastProvider) ?? main.lastProvider)
       : undefined;
   const lastTo = typeof main?.lastTo === "string" ? main.lastTo.trim() : "";
@@ -144,7 +145,7 @@ async function resolveDeliveryTarget(
   let provider =
     requestedProvider === "last"
       ? lastProvider
-      : requestedProvider === "webchat"
+      : requestedProvider === INTERNAL_MESSAGE_PROVIDER
         ? undefined
         : normalizeProviderId(requestedProvider);
   if (!provider) {
