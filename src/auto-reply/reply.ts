@@ -857,6 +857,7 @@ export async function getReplyFromConfig(
   );
   const groupIntro = shouldInjectGroupIntro
     ? buildGroupIntro({
+        cfg,
         sessionCtx,
         sessionEntry,
         defaultActivation,
