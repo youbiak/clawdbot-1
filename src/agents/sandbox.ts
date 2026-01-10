@@ -168,6 +168,7 @@ const DEFAULT_TOOL_ALLOW = [
   "sessions_spawn",
   "session_status",
 ];
+// Provider docking: keep sandbox policy aligned with provider tool names.
 const DEFAULT_TOOL_DENY = [
   "browser",
   "canvas",
