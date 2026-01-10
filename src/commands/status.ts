@@ -26,13 +26,13 @@ import {
   loadProviderUsageSummary,
 } from "../infra/provider-usage.js";
 import { peekSystemEvents } from "../infra/system-events.js";
+import { resolveProviderDefaultAccountId } from "../providers/plugins/helpers.js";
 import { listProviderPlugins } from "../providers/plugins/index.js";
 import type {
   ProviderAccountSnapshot,
   ProviderId,
   ProviderPlugin,
 } from "../providers/plugins/types.js";
-import { DEFAULT_ACCOUNT_ID } from "../routing/session-key.js";
 import type { RuntimeEnv } from "../runtime.js";
 import { resolveHeartbeatSeconds } from "../web/reconnect.js";
 import { formatHealthProviderLines, type HealthSummary } from "./health.js";
@@ -91,10 +91,11 @@ async function resolveLinkProviderContext(
 ): Promise<LinkProviderContext | null> {
   for (const plugin of listProviderPlugins()) {
     const accountIds = plugin.config.listAccountIds(cfg);
-    const defaultAccountId =
-      plugin.config.defaultAccountId?.(cfg) ??
-      accountIds[0] ??
-      DEFAULT_ACCOUNT_ID;
+    const defaultAccountId = resolveProviderDefaultAccountId({
+      plugin,
+      cfg,
+      accountIds,
+    });
     const account = plugin.config.resolveAccount(cfg, defaultAccountId);
     const enabled = plugin.config.isEnabled
       ? plugin.config.isEnabled(account, cfg)
